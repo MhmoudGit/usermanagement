@@ -1,0 +1,63 @@
+package auth
+
+import "usermanagement/templates/root"
+
+templ LoginUI() {
+	@root.App() {
+		<div class="h-screen flex flex-col justify-center items-center">
+			<div class="relative bg-slate-50">
+				<form
+					id="loginForm"
+					hx-post="/login"
+					hx-target="body"
+					hx-replace-url="/"
+					class="relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4 border p-4 rounded-md shadow-md m-0 z-50"
+				>
+					<p class="font-bold">
+						LOGIN
+					</p>
+					@textInput("Email", "email", "email")
+					@textInput("Password", "password", "password")
+					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 my-2">LOGIN</button>
+					<p id="err" class="text-red-500 text-xs"></p>
+				</form>
+				<span class="absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-5 z-10">sss</span>
+			</div>
+		</div>
+	}
+	@handle401()
+}
+
+templ textInput(label, name, iType string) {
+	<div>
+		<label class="text-xs m-1 p-1 duration-75">{ label }</label>
+		<input type={ iType } name={ name } placeholder={ name } required class="border rounded-md bg-white w-full outline-none p-1"/>
+	</div>
+}
+
+templ orSpan() {
+	<span class="flex justify-center items-center">
+		<span class="w-full border"></span>
+		<p class="text-slate-400 px-1 text-xs">or</p>
+		<span class="w-full border"></span>
+	</span>
+}
+
+templ differentLogins() {
+	<div class="flex justify-center items-center gap-2 text-white mb-3">
+		<button type="button" class="p-2 bg-black hover:bg-gray-950 w-full">Google</button>
+		<button type="button" class="p-2 bg-black hover:bg-gray-950 w-full">Google</button>
+		<button type="button" class="p-2 bg-black hover:bg-gray-950 w-full">Google</button>
+	</div>
+}
+
+script handle401() {
+		document.getElementById('loginForm').addEventListener('htmx:afterOnLoad', function (event) {
+		// Check if the response status is 400 (Bad Request)
+		if (event.detail.xhr.status === 400) {
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}})
+}

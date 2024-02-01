@@ -1,0 +1,27 @@
+package home
+
+import "usermanagement/templates/root"
+
+templ UI(user string) {
+	@root.App() {
+		<div
+			class="flex justify-center items-center gap-4 p-2"
+		>
+			if user != "" {
+				@AuthorizedUser(user)
+			} else {
+				@UnAuthorizedUser()
+			}
+		</div>
+	}
+}
+
+templ AuthorizedUser(user string) {
+	<p class="text-xl">Hello, <span class="text-green-400">{ user }</span> form Home Page</p>
+	<a href="/logout" class="bg-red-500 hover:bg-red-300 py-1 px-5 rounded-md">logout</a>
+}
+
+templ UnAuthorizedUser() {
+	<p class="text-xl">Hello form Home Page</p>
+	<a href="/login" class="bg-green-500 hover:bg-green-300 py-1 px-5 rounded-md">login</a>
+}
