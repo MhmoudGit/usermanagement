@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 	"usermanagement/templates/auth"
 
@@ -31,28 +32,57 @@ type Workspace struct {
 	Users []User
 }
 
-type User struct {
-	Username  string `json:"username" form:"username"`
-	Email     string `json:"email" form:"email"`
-	Password  string `json:"_"`
-	Role      string `json:"role" form:"role"`
-	Workspace Workspace
-}
-
-func NewUser(username, email, password, role string) User {
-	return User{
-		Username: username,
-		Email:    email,
-		Password: password,
-		Role:     role,
-		Workspace: Workspace{
-			Id:   id,
-			Name: username + "-workspace",
-		},
+func (w *Workspace) NewWorkspace(id int, name string, user User) Workspace {
+	w.Users = append(w.Users, user)
+	return Workspace{
+		Id:    id,
+		Name:  name,
+		Users: w.Users,
 	}
 }
 
-var Users []User = []User{}
+type User struct {
+	Username    string `json:"username" form:"username"`
+	Email       string `json:"email" form:"email"`
+	Password    string `json:"_"`
+	Role        string `json:"role" form:"role"`
+	WorkspaceID int
+}
+
+func NewUser(username, email, password, role string, workspaceID int) User {
+	return User{
+		Username:    username,
+		Email:       email,
+		Password:    password,
+		Role:        role,
+		WorkspaceID: workspaceID,
+	}
+}
+
+var Workspaces []Workspace = []Workspace{
+	{
+		1,
+		"first-workspace",
+		[]User{{
+			"first",
+			"first@email.com",
+			"123456",
+			ADMIN,
+			1,
+		},
+		},
+	},
+}
+
+var Users []User = []User{
+	{
+		"first",
+		"first@email.com",
+		"123456",
+		ADMIN,
+		1,
+	},
+}
 
 func AuthRouter(e *echo.Echo) {
 	e.GET("/login", Login)
@@ -83,6 +113,11 @@ func LoginHandler(c echo.Context) error {
 			cookie.Value = user.Username
 			cookie.Expires = time.Now().Add(24 * time.Hour)
 			c.SetCookie(cookie)
+			cookie2 := new(http.Cookie)
+			cookie2.Name = "workspace"
+			cookie2.Value = strconv.Itoa(user.WorkspaceID)
+			cookie2.Expires = time.Now().Add(24 * time.Hour)
+			c.SetCookie(cookie2)
 			return c.Redirect(http.StatusSeeOther, "/")
 		}
 	}
@@ -95,6 +130,10 @@ func LogoutHandler(c echo.Context) error {
 	cookie.Name = "username"
 	cookie.Expires = time.Now().AddDate(2000, 0, 0)
 	c.SetCookie(cookie)
+	cookie2 := new(http.Cookie)
+	cookie2.Name = "workspace"
+	cookie2.Expires = time.Now().AddDate(2000, 0, 0)
+	c.SetCookie(cookie2)
 	return c.Redirect(http.StatusSeeOther, "/")
 }
 
@@ -105,6 +144,7 @@ func Signup(c echo.Context) error {
 
 func SignupHandler(c echo.Context) error {
 	var signupData SignupFormData
+	var w Workspace
 
 	err := c.Bind(&signupData)
 	if err != nil {
@@ -116,7 +156,9 @@ func SignupHandler(c echo.Context) error {
 			return c.HTML(http.StatusBadRequest, "email or username taken")
 		}
 	}
-	newUser := NewUser(signupData.Username, signupData.Email, signupData.Password, ADMIN)
+	newUser := NewUser(signupData.Username, signupData.Email, signupData.Password, ADMIN, id)
+	newWorkspace := w.NewWorkspace(id, signupData.Username+"-workspace", newUser)
+	Workspaces = append(Workspaces, newWorkspace)
 	Users = append(Users, newUser)
 	id++
 	return c.Redirect(http.StatusSeeOther, "/login")

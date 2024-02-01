@@ -2,26 +2,28 @@ package home
 
 import "usermanagement/templates/root"
 
-templ UI(user string) {
+templ UI(user, workspace string) {
 	@root.App() {
-		<div
-			class="flex justify-center items-center gap-4 p-2"
-		>
-			if user != "" {
-				@AuthorizedUser(user)
-			} else {
-				@UnAuthorizedUser()
-			}
-		</div>
+		if user != "" || workspace != "" {
+			@AuthorizedUser(user, workspace)
+		} else {
+			@UnAuthorizedUser()
+		}
 	}
 }
 
-templ AuthorizedUser(user string) {
-	<p class="text-xl">Hello, <span class="text-green-400">{ user }</span> from Home Page</p>
+templ AuthorizedUser(user, workspace string) {
+	<p class="text-xl">Hello, <span class="text-green-400">{ user }</span> from workspace { workspace }</p>
 	<a href="/logout" class="bg-red-500 hover:bg-red-300 py-1 px-5 rounded-md">logout</a>
 }
 
 templ UnAuthorizedUser() {
-	<p class="text-xl">Hello form Home Page</p>
-	<a href="/login" class="bg-green-500 hover:bg-green-300 py-1 px-5 rounded-md">login</a>
+	<div class="h-screen w-screen relative grid grid-cols-3 justify-center items-center">
+		<img class="absolute left-0 top-0 w-screen h-screen" src="/static/imgs/login.jpg"/>
+		<span class="col-span-2 h-full z-50 bg-black opacity-40 backdrop-blur-sm"></span>
+		<div class="col-span-1 h-full flex flex-col bg-white justify-center items-center z-50">
+			<p class="text-xl">Hello form Home Page</p>
+			<a href="/login" class="bg-green-500 hover:bg-green-300 py-1 px-5 rounded-md">login</a>
+		</div>
+	</div>
 }

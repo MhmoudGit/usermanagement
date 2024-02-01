@@ -13,9 +13,14 @@ func HomeRouter(e *echo.Echo) {
 func Home(c echo.Context) error {
 	user, err := c.Cookie("username")
 	if err != nil {
-		component := home.UI("")
+		component := home.UI("", "")
 		return component.Render(c.Request().Context(), c.Response())
 	}
-	component := home.UI(user.Value)
+	userWorkspaceID, err := c.Cookie("workspace")
+	if err != nil {
+		component := home.UI("", "")
+		return component.Render(c.Request().Context(), c.Response())
+	}
+	component := home.UI(user.Value, userWorkspaceID.Value)
 	return component.Render(c.Request().Context(), c.Response())
 }

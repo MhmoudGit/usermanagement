@@ -31,7 +31,7 @@ func LoginUI() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-screen flex flex-col justify-center items-center\"><img class=\"fixed left-0 top-0 w-screen h-screen\" src=\"/static/imgs/login.jpg\"><div class=\"relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden\"><form id=\"loginForm\" hx-post=\"/login\" hx-target=\"body\" hx-replace-url=\"/\" class=\"relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm\"><p class=\"font-bold\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-screen flex flex-col justify-center items-center\"><img class=\"fixed left-0 top-0 w-screen h-screen\" src=\"/static/imgs/login.jpg\"> <span class=\"fixed left-0 top-0 w-screen h-screen bg-black opacity-40 backdrop-blur-sm\"></span><div class=\"relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden\"><form id=\"loginForm\" hx-post=\"/login\" hx-target=\"body\" hx-replace-url=\"/\" class=\"relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm\"><p class=\"font-bold\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -123,7 +123,7 @@ func textInput(label, name, iType string) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\auth\login.templ`, Line: 36, Col: 52}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates\auth\login.templ`, Line: 37, Col: 52}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
