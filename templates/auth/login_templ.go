@@ -61,7 +61,7 @@ func LoginUI() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button><p id=\"err\" class=\"text-red-500 text-xs\"></p></form><span class=\"absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-50 z-10\"></span></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button><p id=\"err\" class=\"text-red-500 text-xs font-bold w-full text-right\"></p></form><span class=\"absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-50 z-10\"></span></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
