@@ -56,10 +56,6 @@ func SignupUI() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = textInput("Workspace", "workspace name", "text").Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"submit\" class=\"bg-black text-white font-bold hover:bg-gray-950 p-2 mt-2\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -113,16 +109,22 @@ func SignupUI() templ.Component {
 
 func handleSignupErr() templ.ComponentScript {
 	return templ.ComponentScript{
-		Name: `__templ_handleSignupErr_058f`,
-		Function: `function __templ_handleSignupErr_058f(){document.getElementById('signupForm').addEventListener('htmx:afterOnLoad', function (event) {
+		Name: `__templ_handleSignupErr_ab1e`,
+		Function: `function __templ_handleSignupErr_ab1e(){document.getElementById('signupForm').addEventListener('htmx:afterOnLoad', function (event) {
 		// Check if the response status is 400 (Bad Request)
-		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
+		if (event.detail.xhr.status === 400){
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}
+		if (event.detail.xhr.status === 401){
 			let errorMessage = event.detail.xhr.responseText
 			// Handle the 400 error here
 			document.getElementById('err').textContent = errorMessage
 			// You can access the response text using event.detail.xhr.responseText
 		}})}`,
-		Call:       templ.SafeScript(`__templ_handleSignupErr_058f`),
-		CallInline: templ.SafeScriptInline(`__templ_handleSignupErr_058f`),
+		Call:       templ.SafeScript(`__templ_handleSignupErr_ab1e`),
+		CallInline: templ.SafeScriptInline(`__templ_handleSignupErr_ab1e`),
 	}
 }

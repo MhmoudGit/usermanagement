@@ -250,16 +250,22 @@ func differentLogins() templ.Component {
 
 func handleLoginErr() templ.ComponentScript {
 	return templ.ComponentScript{
-		Name: `__templ_handleLoginErr_16f4`,
-		Function: `function __templ_handleLoginErr_16f4(){document.getElementById('loginForm').addEventListener('htmx:afterOnLoad', function (event) {
+		Name: `__templ_handleLoginErr_8132`,
+		Function: `function __templ_handleLoginErr_8132(){document.getElementById('loginForm').addEventListener('htmx:afterOnLoad', function (event) {
 		// Check if the response status is 400 (Bad Request)
-		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
+		if (event.detail.xhr.status === 400){
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}
+		if (event.detail.xhr.status === 401){
 			let errorMessage = event.detail.xhr.responseText
 			// Handle the 400 error here
 			document.getElementById('err').textContent = errorMessage
 			// You can access the response text using event.detail.xhr.responseText
 		}})}`,
-		Call:       templ.SafeScript(`__templ_handleLoginErr_16f4`),
-		CallInline: templ.SafeScriptInline(`__templ_handleLoginErr_16f4`),
+		Call:       templ.SafeScript(`__templ_handleLoginErr_8132`),
+		CallInline: templ.SafeScriptInline(`__templ_handleLoginErr_8132`),
 	}
 }

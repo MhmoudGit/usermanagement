@@ -20,7 +20,6 @@ templ SignupUI() {
 					@textInput("Username", "username", "text")
 					@textInput("Email", "email", "email")
 					@textInput("Password", "password", "password")
-					@textInput("Workspace", "workspace name", "text")
 					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 mt-2">SIGNUP</button>
 					<p id="err" class="text-red-500 text-xs font-bold w-full text-right"></p>
 					<p>
@@ -37,10 +36,17 @@ templ SignupUI() {
 script handleSignupErr() {
 		document.getElementById('signupForm').addEventListener('htmx:afterOnLoad', function (event) {
 		// Check if the response status is 400 (Bad Request)
-		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
+		if (event.detail.xhr.status === 400){
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}
+		if (event.detail.xhr.status === 401){
 			let errorMessage = event.detail.xhr.responseText
 			// Handle the 400 error here
 			document.getElementById('err').textContent = errorMessage
 			// You can access the response text using event.detail.xhr.responseText
 		}})
+
 }

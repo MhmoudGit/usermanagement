@@ -58,7 +58,13 @@ templ differentLogins() {
 script handleLoginErr() {
 		document.getElementById('loginForm').addEventListener('htmx:afterOnLoad', function (event) {
 		// Check if the response status is 400 (Bad Request)
-		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
+		if (event.detail.xhr.status === 400){
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}
+		if (event.detail.xhr.status === 401){
 			let errorMessage = event.detail.xhr.responseText
 			// Handle the 400 error here
 			document.getElementById('err').textContent = errorMessage
