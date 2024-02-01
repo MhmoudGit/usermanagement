@@ -5,13 +5,14 @@ import "usermanagement/templates/root"
 templ LoginUI() {
 	@root.App() {
 		<div class="h-screen flex flex-col justify-center items-center">
-			<div class="relative bg-slate-50">
+			<img class="fixed left-0 top-0 w-screen h-screen" src="/static/imgs/login.jpg"/>
+			<div class="relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden">
 				<form
 					id="loginForm"
 					hx-post="/login"
 					hx-target="body"
 					hx-replace-url="/"
-					class="relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4 border p-4 rounded-md shadow-md m-0 z-50"
+					class="relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm"
 				>
 					<p class="font-bold">
 						LOGIN
@@ -21,7 +22,7 @@ templ LoginUI() {
 					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 my-2">LOGIN</button>
 					<p id="err" class="text-red-500 text-xs"></p>
 				</form>
-				<span class="absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-5 z-10">sss</span>
+				<span class="absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-50 z-10"></span>
 			</div>
 		</div>
 	}
@@ -31,7 +32,7 @@ templ LoginUI() {
 templ textInput(label, name, iType string) {
 	<div>
 		<label class="text-xs m-1 p-1 duration-75">{ label }</label>
-		<input type={ iType } name={ name } placeholder={ name } required class="border rounded-md bg-white w-full outline-none p-1"/>
+		<input type={ iType } name={ name } placeholder={ name } required class="border text-black rounded-md bg-white w-full outline-none p-1"/>
 	</div>
 }
 
