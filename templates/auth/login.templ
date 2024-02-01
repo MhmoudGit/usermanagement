@@ -19,14 +19,17 @@ templ LoginUI() {
 					</p>
 					@textInput("Email", "email", "email")
 					@textInput("Password", "password", "password")
-					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 my-2">LOGIN</button>
+					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 mt-2">LOGIN</button>
 					<p id="err" class="text-red-500 text-xs font-bold w-full text-right"></p>
+					<p>
+						don't have an account? <a href="/signup" class="text-black hover:text-gray-950 font-bold">SIGNUP</a>
+					</p>
 				</form>
 				<span class="absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-50 z-10"></span>
 			</div>
 		</div>
 	}
-	@handle401()
+	@handleLoginErr()
 }
 
 templ textInput(label, name, iType string) {
@@ -52,10 +55,10 @@ templ differentLogins() {
 	</div>
 }
 
-script handle401() {
+script handleLoginErr() {
 		document.getElementById('loginForm').addEventListener('htmx:afterOnLoad', function (event) {
 		// Check if the response status is 400 (Bad Request)
-		if (event.detail.xhr.status === 400) {
+		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
 			let errorMessage = event.detail.xhr.responseText
 			// Handle the 400 error here
 			document.getElementById('err').textContent = errorMessage

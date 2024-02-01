@@ -1,0 +1,46 @@
+package auth
+
+import "usermanagement/templates/root"
+
+templ SignupUI() {
+	@root.App() {
+		<div class="h-screen flex flex-col justify-center items-center">
+			<img class="fixed left-0 top-0 w-screen h-screen" src="/static/imgs/login.jpg"/>
+			<div class="relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden">
+				<form
+					id="signupForm"
+					hx-post="/signup"
+					hx-target="body"
+					hx-replace-url="/"
+					class="relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm"
+				>
+					<p class="font-bold">
+						SIGNUP
+					</p>
+					@textInput("Username", "username", "text")
+					@textInput("Email", "email", "email")
+					@textInput("Password", "password", "password")
+					@textInput("Workspace", "workspace name", "text")
+					<button type="submit" class="bg-black text-white font-bold hover:bg-gray-950 p-2 mt-2">SIGNUP</button>
+					<p id="err" class="text-red-500 text-xs font-bold w-full text-right"></p>
+					<p>
+						already have an account? <a href="/login" class="text-black hover:text-gray-950 font-bold">LOGIN</a>
+					</p>
+				</form>
+				<span class="absolute top-0 left-0 h-full w-[200px] bg-black rounded-e-full opacity-50 z-10"></span>
+			</div>
+		</div>
+	}
+	@handleSignupErr()
+}
+
+script handleSignupErr() {
+		document.getElementById('signupForm').addEventListener('htmx:afterOnLoad', function (event) {
+		// Check if the response status is 400 (Bad Request)
+		if (event.detail.xhr.status === 400) || (event.detail.xhr.status === 401) {
+			let errorMessage = event.detail.xhr.responseText
+			// Handle the 400 error here
+			document.getElementById('err').textContent = errorMessage
+			// You can access the response text using event.detail.xhr.responseText
+		}})
+}

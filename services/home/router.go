@@ -11,7 +11,7 @@ func HomeRouter(e *echo.Echo) {
 }
 
 func Home(c echo.Context) error {
-	user, err := c.Cookie("userEmail")
+	user, err := c.Cookie("username")
 	if err != nil {
 		component := home.UI("")
 		return component.Render(c.Request().Context(), c.Response())

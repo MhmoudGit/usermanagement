@@ -8,13 +8,37 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+const ADMIN = "Admin"
+const USER = "User"
+
 type LoginFormData struct {
 	Email    string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
 }
 
-var Users []LoginFormData = []LoginFormData{
-	{Email: "email@email.com", Password: "123456"},
+type SignupFormData struct {
+	Username  string `json:"username" form:"username"`
+	Email     string `json:"email" form:"email"`
+	Password  string `json:"password" form:"password"`
+	Workspace string `json:"workspace" form:"workspace"`
+}
+
+type User struct {
+	Username  string `json:"username" form:"username"`
+	Email     string `json:"email" form:"email"`
+	Password  string `json:"_"`
+	Workspace string `json:"workspace" form:"workspace"`
+	Role      string `json:"role" form:"role"`
+}
+
+var Users []User = []User{
+	{
+		Username:  "firstuser",
+		Email:     "email@email.com",
+		Password:  "123456",
+		Workspace: "myworkspace",
+		Role:      ADMIN,
+	},
 }
 
 func AuthRouter(e *echo.Echo) {
@@ -41,8 +65,8 @@ func LoginHandler(c echo.Context) error {
 		if user.Email == loginData.Email && user.Password == loginData.Password {
 			// Set a cookie
 			cookie := new(http.Cookie)
-			cookie.Name = "userEmail"
-			cookie.Value = user.Email
+			cookie.Name = "username"
+			cookie.Value = user.Username
 			cookie.Expires = time.Now().Add(24 * time.Hour)
 			c.SetCookie(cookie)
 			return c.Redirect(http.StatusSeeOther, "/")
@@ -54,13 +78,24 @@ func LoginHandler(c echo.Context) error {
 
 func LogoutHandler(c echo.Context) error {
 	cookie := new(http.Cookie)
-	cookie.Name = "userEmail"
+	cookie.Name = "username"
 	cookie.Expires = time.Now().AddDate(2000, 0, 0)
 	c.SetCookie(cookie)
 	return c.Redirect(http.StatusSeeOther, "/")
 }
 
 func Signup(c echo.Context) error {
-	component := auth.LoginUI()
+	component := auth.SignupUI()
 	return component.Render(c.Request().Context(), c.Response())
+}
+
+func SignupHandler(c echo.Context) error {
+	var loginData LoginFormData
+
+	err := c.Bind(&loginData)
+	if err != nil {
+		return c.HTML(http.StatusBadRequest, "form data handling error")
+	}
+
+	return nil
 }
