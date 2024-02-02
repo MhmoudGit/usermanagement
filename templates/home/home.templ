@@ -13,8 +13,13 @@ templ UI(user, workspace string) {
 }
 
 templ AuthorizedUser(user, workspace string) {
-	<p class="text-xl">Hello, <span class="text-green-400">{ user }</span> from workspace { workspace }</p>
-	<a href="/logout" class="bg-red-500 hover:bg-red-300 py-1 px-5 rounded-md">logout</a>
+	<div class="w-full flex flex-col justify-center items-center">
+		<div class="max-w-[1200px] w-full flex justify-between items-center p-4 py-7">
+			<p class="font-Sixtyfour text-3xl font-extrabold text-sky-500">WORKSPACE</p>
+			<p class="text-xl text-sky-500">Hello, <span class="text-green-400">{ user }</span> from { workspace }</p>
+			<a href="/logout" class="bg-red-500 hover:bg-red-300 py-1 px-5 rounded-md">logout</a>
+		</div>
+	</div>
 }
 
 templ UnAuthorizedUser() {
