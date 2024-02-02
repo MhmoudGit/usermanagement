@@ -31,7 +31,7 @@ func SignupUI() templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-screen flex flex-col justify-center items-center\"><img class=\"fixed left-0 top-0 w-screen h-screen\" src=\"/static/imgs/login.jpg\"> <span class=\"fixed left-0 top-0 w-screen h-screen bg-black opacity-40 backdrop-blur-sm\"></span><div class=\"relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden\"><form id=\"signupForm\" hx-post=\"/signup\" hx-target=\"body\" hx-replace-url=\"/\" class=\"relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm\"><p class=\"font-bold\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"h-screen flex flex-col justify-center items-center\"><div class=\"relative rounded-md shadow-lg backdrop-blur-md text-white border border-black overflow-hidden\"><form id=\"signupForm\" hx-post=\"/signup\" hx-target=\"body\" hx-replace-url=\"/\" class=\"relative min-w-[200px] md:min-w-[400px] flex flex-col gap-4  p-4  m-0 z-50 backdrop-blur-sm\"><p class=\"font-bold\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -56,7 +56,7 @@ func SignupUI() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"submit\" class=\"bg-black text-white font-bold hover:bg-gray-950 p-2 mt-2\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"submit\" class=\"bg-sky-500 hover:bg-sky-600 text-white font-bold p-2 mt-2\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -74,7 +74,7 @@ func SignupUI() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a href=\"/login\" class=\"text-black hover:text-gray-950 font-bold\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a href=\"/login\" class=\"text-sky-500 hover:text-sky-600 font-bold\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

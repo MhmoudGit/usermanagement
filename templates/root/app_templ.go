@@ -41,7 +41,7 @@ func App() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title></head><body class=\"bg-slate-100 font-sans\"><div class=\"flex h-screen w-full fixed\" id=\"layout\"><div class=\"w-full overflow-y-auto overflow-x-auto\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title></head><body class=\"bg-slate-100 font-sans\"><img class=\"fixed left-0 top-0 w-screen h-screen\" src=\"/static/imgs/login.jpg\"> <span class=\"fixed left-0 top-0 w-screen h-screen bg-black opacity-60\"></span><div class=\"flex h-screen w-full fixed\" id=\"layout z-50\"><div class=\"w-full overflow-y-auto overflow-x-auto\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
